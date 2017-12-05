@@ -21,6 +21,9 @@ BLOCKPACKAGES=$8        #for live usb block upgrades and installations of gub an
 SHAREMOUNT=$9           #mount share partition (fat32) to /home/student/SHARE
 ROOTPW=${10}            #set password for user student
 SETUSER=${11}           #set user student autologin to true (life does not work with other usernames atm.)
+UPDATE=${12}           #update life applications
+
+
 
 if [ "$(id -u)" != "0" ]; then
     kdialog  --msgbox 'You need root privileges - Stopping program' --title 'LIFE' --caption "LIFE" > /dev/null
@@ -40,6 +43,7 @@ echo $BLOCKPACKAGES
 echo $SHAREMOUNT
 echo $ROOTPW
 echo $SETUSER
+echo $UPDATE
 #exit 0
  
 progress=$(kdialog --progressbar "Paktetlisten werden aktualisiert....                                                              ");
@@ -49,7 +53,7 @@ progress=$(kdialog --progressbar "Paktetlisten werden aktualisiert....          
 
 
 
-qdbus $progress Set "" maximum 14
+qdbus $progress Set "" maximum 15
 
 if [[( $UPDATESOURCES = "0" )]]
 then
@@ -393,11 +397,20 @@ else
 fi
 
 
-
-
-
-
 qdbus $progress Set "" value 13
+
+if [[( $UPDATE = "0" )]]
+then
+    sleep 0 #do nothing
+else
+    qdbus $progress setLabelText "LiFE applications werden aktualisiert.... "
+    exec python ~/.life/applications/life-update/main.py &
+fi
+
+
+
+
+qdbus $progress Set "" value 14
 
 if [[( $LOCKDESKTOP = "0" )]]
 then
@@ -425,7 +438,7 @@ else
     sudo cp ${BACKUPDIR}/lockdown/kde5rc-LOCK /etc/kde5rc
     cp -a ${BACKUPDIR}/lockdown/kglobalshortcutsrc-LOCK ${HOME}.config/kglobalshortcutsrc
 
-    qdbus $progress Set "" value 14
+    qdbus $progress Set "" value 15
 
     echo "all done..."
     echo "restarting desktop...."

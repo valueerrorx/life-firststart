@@ -207,14 +207,14 @@
       <string>Hostnamen anpassen</string>
      </property>
      <property name="checked">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
     <widget class="QCheckBox" name="lock">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>290</y>
+       <y>310</y>
        <width>321</width>
        <height>24</height>
       </rect>
@@ -226,7 +226,7 @@
       <string>Desktop Widgets und Funktionen sperren</string>
      </property>
      <property name="checked">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
     <widget class="QCheckBox" name="restricted">
@@ -311,7 +311,7 @@
       <string>Bootloader und Kernelupgrades verhindern (wichtig für live usb Systeme)</string>
      </property>
      <property name="checked">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
     </widget>
     <widget class="QCheckBox" name="share">
@@ -330,7 +330,7 @@
       <string>Share Partition automatisch einbinden (empfohlen für live usb Systeme)</string>
      </property>
      <property name="checked">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
     </widget>
     <widget class="QCheckBox" name="rootpw">
@@ -350,6 +350,9 @@
      </property>
     </widget>
     <widget class="QCheckBox" name="setuser">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -363,6 +366,25 @@
      </property>
      <property name="text">
       <string>Nutzer &quot;Student&quot; automatisch einloggen (empfohlen)</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="update">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>290</y>
+       <width>451</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wurde das System mit Calamares installiert, &lt;br/&gt;so muss man für den vollen Funktionsumfang &lt;br/&gt;den Nutzer Student als Standnutzer wählen. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="text">
+      <string>LiFE Applications updaten (empfohlen)</string>
      </property>
      <property name="checked">
       <bool>true</bool>

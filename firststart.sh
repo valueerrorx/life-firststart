@@ -8,7 +8,7 @@ kdialog --dontagain firststart:nofirststart --caption "First Start Wizard" --tit
 
 if [ "$?" = 0 ]; then
     rm /home/student/.config/autostart-scripts/firststart.sh
-    exec /usr/bin/lifesudo '/usr/bin/python /home/student/.life/applications/firststartwizard/firststart.py'
+    exec /usr/bin/lifesudo '/usr/bin/python /home/student/.life/applications/life-firststart/firststart.py'
 else
     sleep 0
 fi;
