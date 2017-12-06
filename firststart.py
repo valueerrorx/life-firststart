@@ -19,7 +19,7 @@ class InetChecker(threading.Thread):
         self.mainui= mainui
 
     def run(self):
-        while self._checkOnline() == False:
+        while True:
             time.sleep(5)
             self._checkOnline()
 
@@ -55,23 +55,24 @@ class MeinDialog(QtWidgets.QDialog):
         self.ui.setWindowIcon(QIcon(winicon))
         self.ui.exit.clicked.connect(self.onAbbrechen)        # setup Slots
         self.ui.start.clicked.connect(self._startConfig)
-        #self.onsignal.connect(lambda: self.uienable())    #setup custom slots
-        #self.offsignal.connect(lambda: self.uidisable())
+        self.onsignal.connect(lambda: self.uienable())    #setup custom slots
+        self.offsignal.connect(lambda: self.uidisable())
 
     
     def uienable(self):  # activates all internet related options
         self.ui.infolabel.setText("Wählen Sie aus nachfolgenden Aktionen!")
         self.ui.sources.setEnabled(True)
-        self.ui.sources.setChecked(True)
         self.ui.sources.setStyleSheet('color: #000;')
         self.ui.sources.setStyleSheet("""QToolTIP {color: #fff;}""")
         self.ui.restricted.setEnabled(True)
-        self.ui.restricted.setChecked(True)
         self.ui.restricted.setStyleSheet('color: #000;')
         self.ui.restricted.setStyleSheet("""QToolTIP {color: #fff;}""")
         self.ui.areader.setEnabled(True)
         self.ui.areader.setStyleSheet('color: #000;')
         self.ui.areader.setStyleSheet("""QToolTIP {color: #fff;}""")
+        self.ui.update.setEnabled(True)
+        self.ui.update.setStyleSheet('color: #000;')
+        self.ui.update.setStyleSheet("""QToolTIP {color: #fff;}""")
         return
 
 
@@ -83,6 +84,8 @@ class MeinDialog(QtWidgets.QDialog):
         self.ui.restricted.setChecked(False)
         self.ui.areader.setEnabled(False)
         self.ui.areader.setChecked(False)
+        self.ui.update.setEnabled(False)
+        self.ui.update.setChecked(False)
         return
 
 
