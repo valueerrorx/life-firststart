@@ -404,7 +404,7 @@ then
     sleep 0 #do nothing
 else
     qdbus $progress setLabelText "LiFE applications werden aktualisiert.... "
-    exec python ~/.life/applications/life-update/main.py &
+    exec sudo -H -u student python ~/.life/applications/life-update/main.py &
 fi
 
 
