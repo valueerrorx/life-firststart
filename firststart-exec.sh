@@ -301,8 +301,9 @@ else
     fi
     
     #replace the line with the keyword with the whole entry
+    CURRENTUID=$(id -u ${USER})
     
-    sudo sed -i "/SHARE/c\\LABEL=SHARE     /home/student/SHARE     vfat    rw,nofail,x-systemd.device-timeout=1,uid=1000,gid=1000,umask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed    0       0" $FSTABETC
+    sudo sed -i "/SHARE/c\\LABEL=SHARE     /home/student/SHARE     vfat    rw,nofail,x-systemd.device-timeout=1,uid=${CURRENTUID},gid=${CURRENTUID},umask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed    0       0" $FSTABETC
     
     sudo chattr +i ${MOUNTPOINTCASPER}/upper/etc/fstab   #make immutable because on live devices this is overwritten on boot otherwise
  
