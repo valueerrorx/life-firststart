@@ -8,7 +8,7 @@
     <x>0</x>
     <y>0</y>
     <width>522</width>
-    <height>432</height>
+    <height>514</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -35,7 +35,7 @@
      <x>0</x>
      <y>10</y>
      <width>521</width>
-     <height>421</height>
+     <height>501</height>
     </rect>
    </property>
    <property name="font">
@@ -95,8 +95,8 @@
     <widget class="QPushButton" name="start">
      <property name="geometry">
       <rect>
-       <x>350</x>
-       <y>350</y>
+       <x>340</x>
+       <y>430</y>
        <width>151</width>
        <height>26</height>
       </rect>
@@ -127,8 +127,8 @@
     <widget class="QPushButton" name="exit">
      <property name="geometry">
       <rect>
-       <x>260</x>
-       <y>350</y>
+       <x>250</x>
+       <y>430</y>
        <width>81</width>
        <height>26</height>
       </rect>
@@ -385,6 +385,25 @@
      </property>
      <property name="text">
       <string>LiFE Applications updaten (empfohlen)</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="untis">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>330</y>
+       <width>321</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>Um an öffentlich zugängigen Stellen die Konfiguration des Desktops zu verhindern &lt;br&gt; kann dieser gesperrt werden.</string>
+     </property>
+     <property name="text">
+      <string>WebUntis URL anpassen</string>
      </property>
      <property name="checked">
       <bool>true</bool>

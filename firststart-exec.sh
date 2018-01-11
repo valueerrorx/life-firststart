@@ -22,6 +22,8 @@ SHAREMOUNT=$9           #mount share partition (fat32) to /home/student/SHARE
 ROOTPW=${10}            #set password for user student
 SETUSER=${11}           #set user student autologin to true (life does not work with other usernames atm.)
 UPDATE=${12}           #update life applications
+UNTIS=${13}           #update life applications
+
 
 
 
@@ -44,6 +46,7 @@ echo $SHAREMOUNT
 echo $ROOTPW
 echo $SETUSER
 echo $UPDATE
+echo $UNTIS
 #exit 0
  
 progress=$(kdialog --progressbar "Paktetlisten werden aktualisiert....                                                              ");
@@ -53,7 +56,7 @@ progress=$(kdialog --progressbar "Paktetlisten werden aktualisiert....          
 
 
 
-qdbus $progress Set "" maximum 15
+qdbus $progress Set "" maximum 16
 
 if [[( $UPDATESOURCES = "0" )]]
 then
@@ -410,8 +413,48 @@ fi
 
 
 
-
 qdbus $progress Set "" value 14
+
+if [[( $UNTIS = "0" )]]
+then
+    sleep 0 #do nothing
+else
+    qdbus $progress setLabelText "WebUntis URL anpassen.... "
+    
+    # check if the location is actually close to something that would work
+    SUBSTRING="http"
+  
+    askuntislocation(){
+        if ! UNTISLOCATION=$(kdialog  --caption "Configure WebUntis Location" --title "Configure WebUntis Location"  --inputbox "Bitte geben Sie ihre WebUntis URL ein !" "https://erato.webuntis.com/WebUntis/?school=bg-klu-voelkring"); 
+        then
+            askuntislocation
+        else
+            if test "${UNTISLOCATION#$SUBSTRING}" != "$UNTISLOCATION"
+            then
+                echo "address seems legit";          # $SUBSTRING is in $UNTISLOCATION at the beginning of the line
+            sleep 0
+            else
+                #echo "that is not a webdav location";  # $SUBSTRING is not in $UNTISLOCATION
+                kdialog --error "$UNTISLOCATION \n\nDies ist keine gültige Adresse!" --title 'Configure WebUntis Location!' --caption "Configure WebUntis Location"
+                askuntislocation
+            fi
+        fi
+    }
+    askuntislocation
+  
+    if [[( $UNTISLOCATION = "" )]]
+    then
+        $UNTISLOCATION = "https://erato.webuntis.com/WebUntis/?school=bg-klu-voelkring"
+    fi
+    
+    sed -i "s#\"http.*\"#\"${UNTISLOCATION}\"#g" ${HOME}/.local/share/applications/WebUntis.desktop 
+    sed -i "s#\"http.*\"#\"${UNTISLOCATION}\"#g" ${HOME}/.local/share/plasma_icons/WebUntis.desktop" 
+fi
+
+
+
+
+qdbus $progress Set "" value 15
 
 if [[( $LOCKDESKTOP = "0" )]]
 then
@@ -439,7 +482,7 @@ else
     sudo cp ${BACKUPDIR}/lockdown/kde5rc-LOCK /etc/kde5rc
     cp -a ${BACKUPDIR}/lockdown/kglobalshortcutsrc-LOCK ${HOME}.config/kglobalshortcutsrc
 
-    qdbus $progress Set "" value 15
+    qdbus $progress Set "" value 16
 
     echo "all done..."
     echo "restarting desktop...."

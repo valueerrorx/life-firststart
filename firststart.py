@@ -91,7 +91,7 @@ class MeinDialog(QtWidgets.QDialog):
 
     def _startConfig(self):
             scriptdirectory=os.path.dirname(os.path.realpath(__file__))
-            command = "%s/firststart-exec.sh %s %s %s %s %s %s %s %s %s %s %s %s" %(scriptdirectory,
+            command = "%s/firststart-exec.sh %s %s %s %s %s %s %s %s %s %s %s %s %s" %(scriptdirectory,
                                                                               self.ui.sources.checkState(),
                                                                               self.ui.webdav.checkState(),
                                                                               self.ui.ssh.checkState(),
@@ -103,7 +103,8 @@ class MeinDialog(QtWidgets.QDialog):
                                                                               self.ui.share.checkState(),
                                                                               self.ui.rootpw.checkState(), 
                                                                               self.ui.setuser.checkState(), 
-                                                                              self.ui.update.checkState() 
+                                                                              self.ui.update.checkState(),
+                                                                              self.ui.untis.checkState() 
                                                                               )
             print command
             self.ui.close()
