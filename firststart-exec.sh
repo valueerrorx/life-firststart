@@ -448,7 +448,7 @@ else
     fi
     
     sed -i "s#\"http.*\"#\"${UNTISLOCATION}\"#g" ${HOME}/.local/share/applications/WebUntis.desktop 
-    sed -i "s#\"http.*\"#\"${UNTISLOCATION}\"#g" ${HOME}/.local/share/plasma_icons/WebUntis.desktop" 
+    sed -i "s#\"http.*\"#\"${UNTISLOCATION}\"#g" ${HOME}/.local/share/plasma_icons/WebUntis.desktop
 fi
 
 
