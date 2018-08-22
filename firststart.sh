@@ -4,7 +4,7 @@
 
 
 
-kdialog --dontagain firststart:nofirststart --caption "First Start Wizard" --title "First Start Wizard"  --yesno "Möchten Sie das System jetzt einrichten?"
+kdialog --dontagain firststart:nofirststart --title "First Start Wizard"  --yesno "Möchten Sie das System jetzt einrichten?"
 
 if [ "$?" = 0 ]; then
     rm /home/student/.config/autostart-scripts/firststart.sh

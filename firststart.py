@@ -57,6 +57,7 @@ class MeinDialog(QtWidgets.QDialog):
         self.ui.start.clicked.connect(self._startConfig)
         self.onsignal.connect(lambda: self.uienable())    #setup custom slots
         self.offsignal.connect(lambda: self.uidisable())
+        self.uidisable()
 
     
     def uienable(self):  # activates all internet related options

@@ -28,7 +28,7 @@ UNTIS=${13}           #update life applications
 
 
 if [ "$(id -u)" != "0" ]; then
-    kdialog  --msgbox 'You need root privileges - Stopping program' --title 'LIFE' --caption "LIFE" > /dev/null
+    kdialog  --msgbox 'You need root privileges - Stopping program' --title 'LIFE' > /dev/null
     exit 1
 fi
 
@@ -49,22 +49,28 @@ echo $UPDATE
 echo $UNTIS
 #exit 0
  
-progress=$(kdialog --progressbar "Paktetlisten werden aktualisiert....                                                              ");
+ 
+
+ 
+ 
+ 
+ 
+progress=$(sudo -H -u ${USER} kdialog --progressbar "Paktetlisten werden aktualisiert....                                                              ");
 
 
 
 
 
 
-qdbus $progress Set "" maximum 16
+sudo -H -u ${USER} qdbus $progress Set "" maximum 16
 
 if [[( $UPDATESOURCES = "0" )]]
 then
     sleep 0 #do nothing
 else
-    qdbus $progress Set "" value 1
+    sudo -H -u ${USER} qdbus $progress Set "" value 1
     sudo apt update
-    qdbus $progress Set "" value 2
+    sudo -H -u ${USER} qdbus $progress Set "" value 2
     sudo apt clean
     sudo apt-get clean
 fi
@@ -76,13 +82,13 @@ fi
 
 
 
-qdbus $progress Set "" value 3
+sudo -H -u ${USER} qdbus $progress Set "" value 3
 
 if [[( $UPDATESOURCES = "0" )]]
 then
     sleep 0 #do nothing
 else
-    qdbus $progress setLabelText "APT Index wird aktualisiert...."
+    sudo -H -u ${USER} qdbus $progress setLabelText "APT Index wird aktualisiert...."
     sudo update-apt-xapian-index -f
 fi
 
@@ -94,13 +100,13 @@ fi
 
 
 
-qdbus $progress Set "" value 4
+sudo -H -u ${USER} qdbus $progress Set "" value 4
 
 if [[( $CREATESSHKEYS = "0" )]]
 then
     sleep 0 #do nothing
 else
-    qdbus $progress setLabelText "SSH Schlüssel werden generiert...."
+    sudo -H -u ${USER} qdbus $progress setLabelText "SSH Schlüssel werden generiert...."
     cd /etc/ssh
     sudo rm -f *_key*
     sudo ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key -N ''
@@ -119,7 +125,7 @@ fi
 
 
 
-qdbus $progress Set "" value 5
+sudo -H -u ${USER} qdbus $progress Set "" value 5
 
 if [[( $CHANGEWEBDAVURL = "0" )]]
 then
@@ -127,13 +133,13 @@ then
     #WEBDAVLOCATION="https://owncloud.europagymnasium.at/remote.php/webdav"
 else
 
-    qdbus $progress setLabelText "Konfiguriere Webdav Location.... "
+    sudo -H -u ${USER} qdbus $progress setLabelText "Konfiguriere Webdav Location.... "
 
     # check if the location is actually close to something that would work
     SUBSTRING="http"
 
     askwebdavlocation(){
-        if ! WEBDAVLOCATION=$(kdialog  --caption "Configure Webdav Location" --title "Configure Webdav Location"  --inputbox "Bitte bestätigen Sie die URL ihres WEBDAV Ordners!" "https://owncloud.europagymnasium.at/remote.php/webdav"); 
+        if ! WEBDAVLOCATION=$(kdialog --title "Configure Webdav Location"  --inputbox "Bitte bestätigen Sie die URL ihres WEBDAV Ordners!" "https://owncloud.europagymnasium.at/remote.php/webdav"); 
         then
             askwebdavlocation
         else
@@ -143,7 +149,7 @@ else
             sleep 0
             else
                 #echo "that is not a webdav location";  # $SUBSTRING is not in $WEBDAVLOCATION
-                kdialog --error "$WEBDAVLOCATION \n\nDies ist keine gültige Webdav Adresse!" --title 'Configure Webdav Location!' --caption "Configure Webdav Location"
+                kdialog --error "$WEBDAVLOCATION \n\nDies ist keine gültige Webdav Adresse!" --title 'Configure Webdav Location!' 
                 askwebdavlocation
             fi
         fi
@@ -200,15 +206,15 @@ fi
 
 
 
-qdbus $progress Set "" value 6
+sudo -H -u ${USER} qdbus $progress Set "" value 6
 
 if [[( $CHANGEHOSTNAME = "0" )]]
 then
     sleep 0 #do nothing
 else
-    qdbus $progress setLabelText "Ändere den Hostnamen.... "
+    sudo -H -u ${USER} qdbus $progress setLabelText "Ändere den Hostnamen.... "
 
-    if ! HOST=$(kdialog  --caption "HOSTNAME" --title "HOSTNAME"  --inputbox "Bitte geben sie einen HOSTNAMEN an" "life"); 
+    if ! HOST=$(kdialog --title "HOSTNAME"  --inputbox "Bitte geben sie einen HOSTNAMEN an" "life"); 
     then
         HOST="life"
     else
@@ -237,13 +243,13 @@ fi
 
 
 
-qdbus $progress Set "" value 7
+sudo -H -u ${USER} qdbus $progress Set "" value 7
 
 if [[( $INSTALLRESTRICTED = "0" )]]
 then
     sleep 0 #do nothing
 else
-    qdbus $progress setLabelText "Installiere Schriftarten und Plugins.... "
+    sudo -H -u ${USER} qdbus $progress setLabelText "Installiere Schriftarten und Plugins.... "
     bar(){
         sudo apt-get -y install ttf-bitstream-vera  ttf-dejavu ttf-xfree86-nonfree kubuntu-restricted-extras
     }
@@ -254,13 +260,13 @@ fi
 
 
 
-qdbus $progress Set "" value 8
+sudo -H -u ${USER} qdbus $progress Set "" value 8
 
 if [[( $BLOCKPACKAGES = "0" )]]
 then
     sleep 0 #do nothing
 else
-    qdbus $progress setLabelText "Blockiere Bootloader- und Kernelupgrades.... "
+    sudo -H -u ${USER} qdbus $progress setLabelText "Blockiere Bootloader- und Kernelupgrades.... "
     echo -e "Package: grub*\nPin: release *\nPin-Priority: -1\n" > /etc/apt/preferences
     echo -e "Package: grub*:i386\nPin: release *\nPin-Priority: -1\n" >> /etc/apt/preferences
     echo -e "Package: linux-image*\nPin: release *\nPin-Priority: -1\n" >> /etc/apt/preferences
@@ -269,13 +275,13 @@ else
 fi
 
 
-qdbus $progress Set "" value 9
+sudo -H -u ${USER} qdbus $progress Set "" value 9
 
 if [[( $SHAREMOUNT = "0" )]]
 then
     sleep 0 #do nothing
 else
-    qdbus $progress setLabelText "Making SHARE mount permanent...."
+    sudo -H -u ${USER} qdbus $progress setLabelText "Making SHARE mount permanent...."
     
     FSTABCHECK=$(grep SHARE /etc/fstab | wc -l)   #test if there is already a SHARE entry (SHARE is used by sed later)
 
@@ -325,13 +331,13 @@ fi
 
 
 
-qdbus $progress Set "" value 10
+sudo -H -u ${USER} qdbus $progress Set "" value 10
 
 if [[( $INSTALLREADER = "0" )]]
 then
     sleep 0 #do nothing
 else
-    qdbus $progress setLabelText "Installiere Adobe reader.... "
+    sudo -H -u ${USER} qdbus $progress setLabelText "Installiere Adobe reader.... "
     foobar(){
         wget ftp://ftp.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/AdbeRdr9.5.5-1_i386linux_enu.deb
         sudo apt install libxml2:i386
@@ -345,35 +351,35 @@ else
 fi
 
 
-qdbus $progress Set "" value 11
+sudo -H -u ${USER} qdbus $progress Set "" value 11
 
 if [[( $ROOTPW = "0" )]]
 then
     sleep 0 #do nothing
 else
-    qdbus $progress setLabelText "Neues Passwort setzen.... "
+    sudo -H -u ${USER} qdbus $progress setLabelText "Neues Passwort setzen.... "
     
     
     PW="empty"
     getROOT(){
-        PASSWD1=$(kdialog  --caption "LIFE" --title "LIFE" --inputbox "Geben sie bitte das gwünschte Benutzer-Passwort an!");
+        PASSWD1=$(kdialog --title "LIFE" --inputbox "Geben sie bitte das gwünschte Benutzer-Passwort an!");
         if [ "$?" = 0 ]; then
-            PASSWD2=$(kdialog  --caption "LIFE" --title "LIFE" --inputbox 'Geben sie bitte das gewünschte Benutzer-Passwort ein zweites mal an!');
+            PASSWD2=$(kdialog --title "LIFE" --inputbox 'Geben sie bitte das gewünschte Benutzer-Passwort ein zweites mal an!');
             if [ "$?" = 0 ]; then
             
                 if [ "$PASSWD2" = "$PASSWD1"  ]; then
-                    sudo -u ${USER} kdialog  --caption "LIFE" --title "LIFE" --passivepopup "Passwort OK!" 3
+                    sudo -u ${USER} kdialog --title "LIFE" --passivepopup "Passwort OK!" 3
                     PW=$PASSWD1
                 else
-                    kdialog  --caption "LIFE" --title "LIFE" --error "Die Passwörter sind nicht ident!"
+                    kdialog --title "LIFE" --error "Die Passwörter sind nicht ident!"
                     getROOT 
                 fi
             else
-                kdialog  --caption "LIFE" --title "LIFE" --error "Kein Password gesetzt!"
+                kdialog   --title "LIFE" --error "Kein Password gesetzt!"
                 sleep 0
             fi
         else
-            kdialog  --caption "LIFE" --title "LIFE" --error "Kein Password gesetzt!"
+            kdialog  --title "LIFE" --error "Kein Password gesetzt!"
             sleep 0
         fi
     }
@@ -389,43 +395,43 @@ fi
 
 
 
-qdbus $progress Set "" value 12
+sudo -H -u ${USER} qdbus $progress Set "" value 12
 
 if [[( $SETUSER = "0" )]]
 then
     sleep 0 #do nothing
 else
-    qdbus $progress setLabelText "Aktiviere Autologin für Benutzer Student.... "
+    sudo -H -u ${USER} qdbus $progress setLabelText "Aktiviere Autologin für Benutzer Student.... "
     sudo cp /home/student/.life/stuff/sddm.conf /etc/
     sudo chown root: /etc/sddm.conf
 fi
 
 
-qdbus $progress Set "" value 13
+sudo -H -u ${USER} qdbus $progress Set "" value 13
 
 if [[( $UPDATE = "0" )]]
 then
     sleep 0 #do nothing
 else
-    qdbus $progress setLabelText "LiFE applications werden aktualisiert.... "
+    sudo -H -u ${USER} qdbus $progress setLabelText "LiFE applications werden aktualisiert.... "
     exec sudo -H -u student python ~/.life/applications/life-update/main.py &
 fi
 
 
 
-qdbus $progress Set "" value 14
+sudo -H -u ${USER} qdbus $progress Set "" value 14
 
 if [[( $UNTIS = "0" )]]
 then
     sleep 0 #do nothing
 else
-    qdbus $progress setLabelText "WebUntis URL anpassen.... "
+    sudo -H -u ${USER} qdbus $progress setLabelText "WebUntis URL anpassen.... "
     
     # check if the location is actually close to something that would work
     SUBSTRING="http"
   
     askuntislocation(){
-        if ! UNTISLOCATION=$(kdialog  --caption "Configure WebUntis Location" --title "Configure WebUntis Location"  --inputbox "Bitte geben Sie ihre WebUntis URL ein !" "https://erato.webuntis.com/WebUntis/?school=bg-klu-voelkring"); 
+        if ! UNTISLOCATION=$(kdialog   --title "Configure WebUntis Location"  --inputbox "Bitte geben Sie ihre WebUntis URL ein !" "https://erato.webuntis.com/WebUntis/?school=bg-klu-voelkring"); 
         then
             askuntislocation
         else
@@ -435,7 +441,7 @@ else
             sleep 0
             else
                 #echo "that is not a webdav location";  # $SUBSTRING is not in $UNTISLOCATION
-                kdialog --error "$UNTISLOCATION \n\nDies ist keine gültige Adresse!" --title 'Configure WebUntis Location!' --caption "Configure WebUntis Location"
+                kdialog --error "$UNTISLOCATION \n\nDies ist keine gültige Adresse!" --title 'Configure WebUntis Location!' 
                 askuntislocation
             fi
         fi
@@ -454,16 +460,16 @@ fi
 
 
 
-qdbus $progress Set "" value 15
+sudo -H -u ${USER} qdbus $progress Set "" value 15
 
 if [[( $LOCKDESKTOP = "0" )]]
 then
     sleep 0 #do nothing
 else
-    qdbus $progress setLabelText "Sperre den Desktop.... "
+    sudo -H -u ${USER} qdbus $progress setLabelText "Sperre den Desktop.... "
     
     if [ -f "/etc/kde5rc" ];then
-        kdialog  --msgbox 'Desktop is already locked - Stopping program' --title 'LIFE' --caption "LIFE" > /dev/null
+        kdialog  --msgbox 'Desktop is already locked - Stopping program' --title 'LIFE' > /dev/null
         sleep 2
         exit 0
     fi
@@ -482,31 +488,31 @@ else
     sudo cp ${BACKUPDIR}/lockdown/kde5rc-LOCK /etc/kde5rc
     cp -a ${BACKUPDIR}/lockdown/kglobalshortcutsrc-LOCK ${HOME}.config/kglobalshortcutsrc
 
-    qdbus $progress Set "" value 16
+    sudo -H -u ${USER} qdbus $progress Set "" value 16
 
     echo "all done..."
     echo "restarting desktop...."
     sleep 1
  
-    sudo -u ${USER} -H kquitapp5 plasmashell &
+    kquitapp5 plasmashell &
     sleep 2
-    exec sudo -u ${USER} -H kstart5 plasmashell &
+    kstart5 plasmashell &
     sleep 2
-    exec sudo -u ${USER} -H kwin --replace &
+    kwin --replace &
 fi
 
 
 
 
 
-qdbus $progress setLabelText "LIFE Client eingerichtet"  
+sudo -H -u ${USER} qdbus $progress setLabelText "LIFE Client eingerichtet"  
 sleep 2
-qdbus $progress close
+sudo -H -u ${USER} qdbus $progress close
 
 
 
 
-kdialog  --msgbox 'All Done!  Please Wait for ongoing operations to finish.' --title 'First Start Wizard' --caption "First Start Wizard" > /dev/null
+kdialog  --msgbox 'All Done!  Please Wait for ongoing operations to finish.' --title 'First Start Wizard' > /dev/null
 
 
 
