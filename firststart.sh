@@ -1,5 +1,5 @@
 #!/bin/bash
-# last updated: 15.01.2017
+# last updated: 25.08.2018
 #delete yourself
 
 
@@ -8,7 +8,7 @@ kdialog --dontagain firststart:nofirststart --title "First Start Wizard"  --yesn
 
 if [ "$?" = 0 ]; then
     rm /home/student/.config/autostart-scripts/firststart.sh
-    exec /usr/bin/lifesudo '/usr/bin/python /home/student/.life/applications/life-firststart/firststart.py'
+    pkxexec '/home/student/.life/applications/life-firststart/firststart.py'
 else
     sleep 0
 fi;
