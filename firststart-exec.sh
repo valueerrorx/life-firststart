@@ -16,13 +16,12 @@ CREATESSHKEYS=$3  # create unique ssh keys
 CHANGEHOSTNAME=$4  #hostname wird beibelassen "life"
 LOCKDESKTOP=$5      #abfrage ob der desktop gesperrt werden soll wird angezeigt
 INSTALLRESTRICTED=$6   #install licensed codecs, fonts, plugins
-INSTALLREADER=$7       #install adobe reader 
-BLOCKPACKAGES=$8        #for live usb block upgrades and installations of gub and kernel
-SHAREMOUNT=$9           #mount share partition (fat32) to /home/student/SHARE
-ROOTPW=${10}            #set password for user student
-SETUSER=${11}           #set user student autologin to true (life does not work with other usernames atm.)
-UPDATE=${12}           #update life applications
-UNTIS=${13}           #update life applications
+BLOCKPACKAGES=$7        #for live usb block upgrades and installations of gub and kernel
+SHAREMOUNT=$8           #mount share partition (fat32) to /home/student/SHARE
+ROOTPW=${9}            #set password for user student
+SETUSER=${10}           #set user student autologin to true (life does not work with other usernames atm.)
+UPDATE=${11}           #update life applications
+UNTIS=${12}           #update life applications
 
 
 
@@ -88,7 +87,7 @@ if [[( $UPDATESOURCES = "0" )]]
 then
     sleep 0 #do nothing
 else
-    sudo -H -u ${USER} qdbus $progress setLabelText "APT Index wird aktualisiert...."
+    sudo -H -u ${USER} qdbus $progress setLabelText "APT Index wird aktualisiert.... dies kann einige Minuten dauern"
     sudo update-apt-xapian-index -f
 fi
 
@@ -330,25 +329,6 @@ else
 fi
 
 
-
-sudo -H -u ${USER} qdbus $progress Set "" value 10
-
-if [[( $INSTALLREADER = "0" )]]
-then
-    sleep 0 #do nothing
-else
-    sudo -H -u ${USER} qdbus $progress setLabelText "Installiere Adobe reader.... "
-    foobar(){
-        wget ftp://ftp.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/AdbeRdr9.5.5-1_i386linux_enu.deb
-        sudo apt install libxml2:i386
-        sudo apt install libgtk2.0-0:i386
-        sudo dpkg -i AdbeRdr9.5.5-1_i386linux_enu.deb
-        sudo apt-get -f install
-        rm AdbeRdr9.5.5-1_i386linux_enu.deb
-    }
-    export -f foobar
-    exec xterm -title firststart -e foobar&
-fi
 
 
 sudo -H -u ${USER} qdbus $progress Set "" value 11
