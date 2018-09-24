@@ -65,14 +65,12 @@ class MeinDialog(QtWidgets.QDialog):
         self.ui.sources.setEnabled(True)
         self.ui.sources.setStyleSheet('color: #000;')
         self.ui.sources.setStyleSheet("""QToolTIP {color: #fff;}""")
-        self.ui.sources.setChecked(True)
         self.ui.restricted.setEnabled(True)
         self.ui.restricted.setStyleSheet('color: #000;')
         self.ui.restricted.setStyleSheet("""QToolTIP {color: #fff;}""")
         self.ui.update.setEnabled(True)
         self.ui.update.setStyleSheet('color: #000;')
         self.ui.update.setStyleSheet("""QToolTIP {color: #fff;}""")
-        self.ui.update.setChecked(True)
         return
 
 
