@@ -194,6 +194,12 @@ else
     echo "---------------------------------------------"
     cat /etc/fstab
     echo "---------------------------------------------"
+    
+    LOCATION=${WEBDAVLOCATION%/*/*}  #cut the webdav part
+    #change url for the desktop link too
+    sed -i "s#\"http.*\"#\"${LOCATION}\"#g" ${HOME}/.local/share/applications/NextCloud.desktop 
+    sed -i "s#\"http.*\"#\"${LOCATION}\"#g" ${HOME}/.local/share/plasma_icons/NextCloud.desktop
+    
 fi
 
 
@@ -474,11 +480,8 @@ else
     echo "restarting desktop...."
     sleep 1
  
-    kquitapp5 plasmashell &
-    sleep 2
-    kstart5 plasmashell &
-    sleep 2
-    kwin --replace &
+
+    sudo killall Xorg
 fi
 
 
