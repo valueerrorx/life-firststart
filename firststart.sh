@@ -1,6 +1,16 @@
 #!/bin/bash
-# last updated: 25.08.2018
+# last updated: 17.11.2018
 #delete yourself
+
+USER=$(logname)   #logname seems to always deliver the current xsession user - no matter if you are using SUDO
+HOME="/home/${USER}/"
+EXAMLOCKFILE="${HOME}.life/EXAM/exam.lock"
+
+#do not trigger this in exam mode
+if [ -f "$EXAMLOCKFILE" ];then
+    echo "exam mode - exit"
+    exit 0
+fi
 
 
 
