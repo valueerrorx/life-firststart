@@ -57,7 +57,8 @@ echo $UNTIS
 progress=$(sudo -H -u ${USER} kdialog --progressbar "Paktetlisten werden aktualisiert....                                                              ");
 
 
-
+#remove cdrom entry from sources.list
+sudo sed -i "/cdrom/c\\#" /etc/apt/sources.list
 
 
 
