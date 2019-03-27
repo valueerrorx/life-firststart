@@ -6,6 +6,17 @@ USER=$(logname)   #logname seems to always deliver the current xsession user - n
 HOME="/home/${USER}/"
 EXAMLOCKFILE="${HOME}.life/EXAM/exam.lock"
 
+COW=$(blkid | grep casper | wc -l)
+
+
+if test $COW = "0" 
+then
+    echo "life mode - exit"
+    exit 0
+fi
+
+
+
 #do not trigger this in exam mode
 if [ -f "$EXAMLOCKFILE" ];then
     echo "exam mode - exit"
