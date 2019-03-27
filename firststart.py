@@ -28,11 +28,11 @@ class InetChecker(threading.Thread):
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             s.connect(("gmail.com",80))
             s.close()
-            print "online"
+            print("online")
             self.mainui.onsignal.emit()
             return True
         except:
-            print "offline"
+            print("offline")
             self.mainui.offsignal.emit()
             return False
 
@@ -58,6 +58,7 @@ class MeinDialog(QtWidgets.QDialog):
         self.onsignal.connect(lambda: self.uienable())    #setup custom slots
         self.offsignal.connect(lambda: self.uidisable())
         #self.uidisable()
+        self.ui.keyPressEvent = self.newOnkeyPressEvent
 
     
     def uienable(self):  # activates all internet related options
@@ -101,7 +102,7 @@ class MeinDialog(QtWidgets.QDialog):
                                                                               self.ui.update.checkState(),
                                                                               self.ui.untis.checkState() 
                                                                               )
-            print command
+            print(command)
             self.ui.close()
             os.system(command)
             os._exit(0)
@@ -111,7 +112,9 @@ class MeinDialog(QtWidgets.QDialog):
         self.ui.close()
         os._exit(0)
 
-
+    def newOnkeyPressEvent(self,e):
+        if e.key() == QtCore.Qt.Key_Escape:
+            print("close event triggered")
 
 
 app = QtWidgets.QApplication(sys.argv)

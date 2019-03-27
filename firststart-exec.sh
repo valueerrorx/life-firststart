@@ -201,6 +201,11 @@ else
     sed -i "s#\"http.*\"#\"${LOCATION}\"#g" ${HOME}/.local/share/applications/NextCloud.desktop 
     sed -i "s#\"http.*\"#\"${LOCATION}\"#g" ${HOME}/.local/share/plasma_icons/NextCloud.desktop
     
+    #network environment location  (cut https://)
+    LOCATIONNET=${WEBDAVLOCATION#*//}
+    LOCATIONNET="webdavs://${LOCATIONNET}"
+    sed -i "s#webdavs:/.*#${LOCATIONNET}#g" "${HOME}/.local/share/remoteview/owncloud-Europagymnasium webdavs.desktop"
+    
 fi
 
 
@@ -257,7 +262,7 @@ then
 else
     sudo -H -u ${USER} qdbus $progress setLabelText "Installiere Schriftarten und Plugins.... "
     bar(){
-        sudo apt-get -y install ttf-bitstream-vera  ttf-dejavu ttf-xfree86-nonfree kubuntu-restricted-extras
+        sudo apt-get -y install ttf-bitstream-vera  ttf-dejavu ttf-xfree86-nonfree kubuntu-restricted-extras kubuntu-restricted-addons
     }
     export -f bar
     exec xterm -title firststart -e bar&
@@ -475,6 +480,10 @@ else
     sudo cp ${BACKUPDIR}/lockdown/kde5rc-LOCK /etc/kde5rc
     cp -a ${BACKUPDIR}/lockdown/kglobalshortcutsrc-LOCK ${HOME}.config/kglobalshortcutsrc
 
+    
+     echo "locking systemsettings..."
+    sudo chmod -x /usr/bin/systemsettings5
+    
     sudo -H -u ${USER} qdbus $progress Set "" value 16
 
     echo "all done..."
