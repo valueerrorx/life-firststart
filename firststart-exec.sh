@@ -22,7 +22,7 @@ ROOTPW=${9}            #set password for user student
 SETUSER=${10}           #set user student autologin to true (life does not work with other usernames atm.)
 UPDATE=${11}           #update life applications
 UNTIS=${12}           #update life applications
-
+NETZLAUFWERK=${13}      #netzlaufwerk aufforderung nach autostart verschieben 
 
 
 
@@ -46,6 +46,7 @@ echo $ROOTPW
 echo $SETUSER
 echo $UPDATE
 echo $UNTIS
+echo $NETZLAUFWERK
 #exit 0
  
  
@@ -62,7 +63,7 @@ sudo sed -i "/cdrom/c\\#" /etc/apt/sources.list
 
 
 
-sudo -H -u ${USER} qdbus $progress Set "" maximum 16
+sudo -H -u ${USER} qdbus $progress Set "" maximum 17
 
 if [[( $UPDATESOURCES = "0" )]]
 then
@@ -451,8 +452,18 @@ fi
 
 
 
-
 sudo -H -u ${USER} qdbus $progress Set "" value 15
+
+if [[( $NETZLAUFWERK = "0" )]]
+then
+    sleep 0 #do nothing
+else
+    #copy remotshare script to autostart
+    cp  /home/student/.life/applications/sambamount/remoteshare  /home/student/.config/autostart-scripts/remoteshare
+fi
+
+
+sudo -H -u ${USER} qdbus $progress Set "" value 16
 
 if [[( $LOCKDESKTOP = "0" )]]
 then
@@ -484,7 +495,7 @@ else
      echo "locking systemsettings..."
     sudo chmod -x /usr/bin/systemsettings5
     
-    sudo -H -u ${USER} qdbus $progress Set "" value 16
+    sudo -H -u ${USER} qdbus $progress Set "" value 17
 
     echo "all done..."
     echo "restarting desktop...."

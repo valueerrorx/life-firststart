@@ -64,14 +64,14 @@ class MeinDialog(QtWidgets.QDialog):
     def uienable(self):  # activates all internet related options
         self.ui.infolabel.setText("Wählen Sie aus nachfolgenden Aktionen!")
         self.ui.sources.setEnabled(True)
-        self.ui.sources.setStyleSheet('color: #000;')
-        self.ui.sources.setStyleSheet("""QToolTIP {color: #fff;}""")
+        #self.ui.sources.setStyleSheet('color: #000;')
+        #self.ui.sources.setStyleSheet("""QToolTIP {color: #fff;}""")
         self.ui.restricted.setEnabled(True)
-        self.ui.restricted.setStyleSheet('color: #000;')
-        self.ui.restricted.setStyleSheet("""QToolTIP {color: #fff;}""")
+        #self.ui.restricted.setStyleSheet('color: #000;')
+        #self.ui.restricted.setStyleSheet("""QToolTIP {color: #fff;}""")
         self.ui.update.setEnabled(True)
-        self.ui.update.setStyleSheet('color: #000;')
-        self.ui.update.setStyleSheet("""QToolTIP {color: #fff;}""")
+        #self.ui.update.setStyleSheet('color: #000;')
+        #self.ui.update.setStyleSheet("""QToolTIP {color: #fff;}""")
         return
 
 
@@ -88,7 +88,7 @@ class MeinDialog(QtWidgets.QDialog):
 
     def _startConfig(self):
             scriptdirectory=os.path.dirname(os.path.realpath(__file__))
-            command = "%s/firststart-exec.sh %s %s %s %s %s %s %s %s %s %s %s %s" %(scriptdirectory,
+            command = "%s/firststart-exec.sh %s %s %s %s %s %s %s %s %s %s %s %s %s" %(scriptdirectory,
                                                                               self.ui.sources.checkState(),
                                                                               self.ui.webdav.checkState(),
                                                                               self.ui.ssh.checkState(),
@@ -100,7 +100,8 @@ class MeinDialog(QtWidgets.QDialog):
                                                                               self.ui.rootpw.checkState(), 
                                                                               self.ui.setuser.checkState(), 
                                                                               self.ui.update.checkState(),
-                                                                              self.ui.untis.checkState() 
+                                                                              self.ui.untis.checkState(),
+                                                                              self.ui.remoteshare.checkState()
                                                                               )
             print(command)
             self.ui.close()
