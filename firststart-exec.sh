@@ -459,7 +459,7 @@ then
     sleep 0 #do nothing
 else
     #copy remotshare script to autostart
-    cp  /home/student/.life/applications/sambamount/remoteshare  /home/student/.config/autostart-scripts/remoteshare
+    cp -p  /home/student/.life/applications/sambamount/remoteshare  /home/student/.config/autostart-scripts/remoteshare
 fi
 
 
