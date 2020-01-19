@@ -281,6 +281,52 @@
          <number>0</number>
         </property>
         <item>
+         <widget class="QCheckBox" name="lock">
+          <property name="toolTip">
+           <string>Um an öffentlich zugängigen Stellen die Konfiguration des Desktops zu verhindern &lt;br&gt; kann dieser gesperrt werden.</string>
+          </property>
+          <property name="text">
+           <string>Desktop und Systemsettings sperren (KIOSK Mode)</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="hostname">
+          <property name="toolTip">
+           <string>Der Hostname (Name des Systems) kann geändert werden.</string>
+          </property>
+          <property name="text">
+           <string>Hostnamen anpassen (default: live)</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="remoteshare">
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ermöglicht das Einbinden von Windows (samba)&lt;br/&gt;Shares gleich nach dem Login.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="text">
+           <string>&quot;Netzlaufwerk verbinden&quot; zu Autostart hinzufügen</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="autoclean">
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Beim Abmelden werden alle Änderungen&lt;br/&gt;an der Konfiguration rückgangig gemacht&lt;br/&gt;sowie das /home Verzeichnis aufgeräumt&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="text">
+           <string>Automatisch Desktop aufräumen und wiederherstellen beim Abmelden</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QCheckBox" name="untis">
           <property name="toolTip">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Die URL des WebUntis Links kann auf die schuleigene URL geändert werden&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -303,52 +349,6 @@
           </property>
           <property name="checked">
            <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="hostname">
-          <property name="toolTip">
-           <string>Der Hostname (Name des Systems) kann geändert werden.</string>
-          </property>
-          <property name="text">
-           <string>Hostnamen anpassen (default: live)</string>
-          </property>
-          <property name="checked">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="lock">
-          <property name="toolTip">
-           <string>Um an öffentlich zugängigen Stellen die Konfiguration des Desktops zu verhindern &lt;br&gt; kann dieser gesperrt werden.</string>
-          </property>
-          <property name="text">
-           <string>Desktop und Systemsettings sperren (KIOSK Mode)</string>
-          </property>
-          <property name="checked">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="autoclean">
-          <property name="toolTip">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Beim Abmelden werden alle Änderungen&lt;br/&gt;an der Konfiguration rückgangig gemacht&lt;br/&gt;sowie das /home Verzeichnis aufgeräumt&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="text">
-           <string>Automatisch Desktop aufräumen und wiederherstellen beim Abmelden</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="remoteshare">
-          <property name="toolTip">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ermöglicht das Einbinden von Windows (samba)&lt;br/&gt;Shares gleich nach dem Login.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="text">
-           <string>&quot;Netzlaufwerk verbinden&quot; zu Autostart hinzufügen</string>
           </property>
          </widget>
         </item>
@@ -378,19 +378,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="update">
-          <property name="toolTip">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bringt die LiFE Applications auf neuesten Stand&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="text">
-           <string>LiFE Applications updaten</string>
-          </property>
-          <property name="checked">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QCheckBox" name="rootpw">
           <property name="toolTip">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Das Passwort der Benutzers Student ist leer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -410,6 +397,19 @@
           </property>
           <property name="text">
            <string>Nutzer &quot;Student&quot; automatisch einloggen (Standard auf live Systemen)</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="update">
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bringt die LiFE Applications auf neuesten Stand&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="text">
+           <string>LiFE Applications updaten</string>
           </property>
           <property name="checked">
            <bool>false</bool>
