@@ -8,7 +8,7 @@
     <x>0</x>
     <y>0</y>
     <width>539</width>
-    <height>698</height>
+    <height>660</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -35,7 +35,7 @@
      <x>10</x>
      <y>10</y>
      <width>520</width>
-     <height>681</height>
+     <height>641</height>
     </rect>
    </property>
    <property name="minimumSize">
@@ -213,6 +213,9 @@
         <string>Basis Einstellungen für live USB Sticks</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
         <item>
          <widget class="QCheckBox" name="ssh">
           <property name="toolTip">
@@ -274,6 +277,9 @@
         <string>Schule</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_5">
+        <property name="spacing">
+         <number>0</number>
+        </property>
         <item>
          <widget class="QCheckBox" name="untis">
           <property name="toolTip">
@@ -355,6 +361,9 @@
         <string>System</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_6">
+        <property name="spacing">
+         <number>0</number>
+        </property>
         <item>
          <widget class="QCheckBox" name="restricted">
           <property name="toolTip">
