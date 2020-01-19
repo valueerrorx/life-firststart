@@ -280,7 +280,7 @@
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Die URL des WebUntis Links kann auf die schuleigene URL geändert werden&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="text">
-           <string>WebUntis URL anpassen</string>
+           <string>WebUntis URL (Desktop Shortcut) anpassen</string>
           </property>
           <property name="checked">
            <bool>false</bool>
@@ -306,7 +306,7 @@
            <string>Der Hostname (Name des Systems) kann geändert werden.</string>
           </property>
           <property name="text">
-           <string>Hostnamen anpassen</string>
+           <string>Hostnamen anpassen (default: live)</string>
           </property>
           <property name="checked">
            <bool>false</bool>
@@ -319,10 +319,20 @@
            <string>Um an öffentlich zugängigen Stellen die Konfiguration des Desktops zu verhindern &lt;br&gt; kann dieser gesperrt werden.</string>
           </property>
           <property name="text">
-           <string>Desktop und Systemsettings sperren</string>
+           <string>Desktop und Systemsettings sperren (KIOSK Mode)</string>
           </property>
           <property name="checked">
            <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="autoclean">
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Beim Abmelden werden alle Änderungen&lt;br/&gt;an der Konfiguration rückgangig gemacht&lt;br/&gt;sowie das /home Verzeichnis aufgeräumt&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="text">
+           <string>Automatisch Desktop aufräumen und wiederherstellen beim Abmelden</string>
           </property>
          </widget>
         </item>
@@ -351,7 +361,7 @@
            <string>Lizensierte Schriftarten, Codecs und Plugins dürfen nicht von dritten distribuiert werden. &lt;br&gt; Die Benutzer des System können diese jedoch nachinstallieren.</string>
           </property>
           <property name="text">
-           <string>Plugins, Codecs und Schriftarten installieren</string>
+           <string>Proprietäre Plugins, Codecs und Schriftarten installieren</string>
           </property>
           <property name="checked">
            <bool>false</bool>
@@ -364,7 +374,7 @@
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bringt die LiFE Applications auf neuesten Stand&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="text">
-           <string>LiFE Applications updaten (empfohlen)</string>
+           <string>LiFE Applications updaten</string>
           </property>
           <property name="checked">
            <bool>false</bool>
@@ -377,7 +387,7 @@
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Das Passwort der Benutzers Student ist leer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="text">
-           <string>Passwort für den Nutzer &quot;Student&quot; setzten (Standardeinstellung ist leer)</string>
+           <string>Passwort für den Nutzer &quot;Student&quot; setzten (default: leer)</string>
           </property>
          </widget>
         </item>

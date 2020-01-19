@@ -23,6 +23,7 @@ SETUSER=${10}           #set user student autologin to true (life does not work 
 UPDATE=${11}           #update life applications
 UNTIS=${12}           #update life applications
 NETZLAUFWERK=${13}      #netzlaufwerk aufforderung nach autostart verschieben 
+AUTOCLEAN=${14}      #beim logout das autoclean script starten (delete * in /home - restore config !
 
 
 
@@ -47,6 +48,7 @@ echo $SETUSER
 echo $UPDATE
 echo $UNTIS
 echo $NETZLAUFWERK
+echo $AUTOCLEAN
 #exit 0
  
  
@@ -63,7 +65,7 @@ sudo sed -i "/cdrom/c\\#" /etc/apt/sources.list
 
 
 
-sudo -H -u ${USER} qdbus $progress Set "" maximum 17
+sudo -H -u ${USER} qdbus $progress Set "" maximum 18
 
 if [[( $UPDATESOURCES = "0" )]]
 then
@@ -463,7 +465,23 @@ else
 fi
 
 
+
 sudo -H -u ${USER} qdbus $progress Set "" value 16
+
+if [[( $AUTOCLEAN = "0" )]]
+then
+    sleep 0 #do nothing
+else
+    #copy autoclean script to plasmaworkspace/shutdown
+    cp -p  /home/student/.life/applications/helperscripts/auto-cleanup-home.sh  /home/waldelf/.config/plasma-workspace/shutdown/
+fi
+
+
+
+
+
+
+sudo -H -u ${USER} qdbus $progress Set "" value 17
 
 if [[( $LOCKDESKTOP = "0" )]]
 then
@@ -495,7 +513,7 @@ else
      echo "locking systemsettings..."
     sudo chmod -x /usr/bin/systemsettings5
     
-    sudo -H -u ${USER} qdbus $progress Set "" value 17
+    sudo -H -u ${USER} qdbus $progress Set "" value 18
 
     echo "all done..."
     echo "restarting desktop...."
