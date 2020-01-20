@@ -461,7 +461,7 @@ then
     sleep 0 #do nothing
 else
     #copy remotshare script to autostart
-    cp -p  /home/student/.life/applications/sambamount/remoteshare  /home/student/.config/autostart-scripts/remoteshare
+    cp -p  ${HOME}/.life/applications/sambamount/remoteshare  ${HOME}/.config/autostart-scripts/remoteshare
 fi
 
 
@@ -473,7 +473,7 @@ then
     sleep 0 #do nothing
 else
     #copy autoclean script to plasmaworkspace/shutdown
-    cp -p  /home/student/.life/applications/helperscripts/auto-cleanup-home.sh  /home/waldelf/.config/plasma-workspace/shutdown/
+    cp -p  ${HOME}/.life/applications/helperscripts/auto-cleanup-home.sh  ${HOME}/.config/plasma-workspace/shutdown/
 fi
 
 
