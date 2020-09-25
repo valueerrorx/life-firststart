@@ -8,7 +8,7 @@
     <x>0</x>
     <y>0</y>
     <width>539</width>
-    <height>710</height>
+    <height>680</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -35,7 +35,7 @@
      <x>10</x>
      <y>10</y>
      <width>520</width>
-     <height>691</height>
+     <height>661</height>
     </rect>
    </property>
    <property name="minimumSize">
@@ -321,7 +321,7 @@
         <item>
          <widget class="QCheckBox" name="autoclean">
           <property name="toolTip">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Beim Abmelden werden alle Änderungen&lt;br/&gt;an der Konfiguration rückgangig gemacht&lt;br/&gt;sowie das /home Verzeichnis aufgeräumt&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Beim Abmelden werden alle Änderungen&lt;br/&gt;an der Konfiguration rückgangig gemacht&lt;br/&gt;sowie das /home Verzeichnis aufgeräumt.&lt;/p&gt;&lt;p&gt;Benutzen sie dieses Feature in Kombination mit dem Programm &amp;quot;Konfiguration sichern&amp;quot; um Änderungen bei Bedarf dauerhaft zu sichern.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="text">
            <string>Automatisch Desktop aufräumen und wiederherstellen beim Abmelden</string>
