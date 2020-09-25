@@ -8,7 +8,7 @@
     <x>0</x>
     <y>0</y>
     <width>539</width>
-    <height>660</height>
+    <height>753</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -35,7 +35,7 @@
      <x>10</x>
      <y>10</y>
      <width>520</width>
-     <height>641</height>
+     <height>731</height>
     </rect>
    </property>
    <property name="minimumSize">
@@ -108,6 +108,7 @@
                 </property>
                 <property name="font">
                  <font>
+                  <family>Ubuntu</family>
                   <weight>50</weight>
                   <bold>false</bold>
                  </font>
@@ -136,6 +137,7 @@
                 </property>
                 <property name="font">
                  <font>
+                  <family>Ubuntu</family>
                   <weight>50</weight>
                   <bold>false</bold>
                  </font>
@@ -349,6 +351,16 @@
           </property>
           <property name="checked">
            <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="savepower">
+          <property name="text">
+           <string>System nach 120 Minuten (idle time) herunterfahren</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
           </property>
          </widget>
         </item>

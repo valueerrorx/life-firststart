@@ -24,6 +24,7 @@ UPDATE=${11}           #update life applications
 UNTIS=${12}           #update life applications
 NETZLAUFWERK=${13}      #netzlaufwerk aufforderung nach autostart verschieben 
 AUTOCLEAN=${14}      #beim logout das autoclean script starten (delete * in /home - restore config !
+SAVEPOWER=${15}      #soll das system nach 120 minuten idletime herunterfahren
 
 
 
@@ -49,6 +50,7 @@ echo $UPDATE
 echo $UNTIS
 echo $NETZLAUFWERK
 echo $AUTOCLEAN
+echo $SAVEPOWER
 #exit 0
  
  
@@ -65,7 +67,7 @@ sudo sed -i "/cdrom/c\\#" /etc/apt/sources.list
 
 
 
-sudo -H -u ${USER} qdbus $progress Set "" maximum 18
+sudo -H -u ${USER} qdbus $progress Set "" maximum 19
 
 if [[( $UPDATESOURCES = "0" )]]
 then
@@ -77,10 +79,6 @@ else
     sudo apt clean
     sudo apt-get clean
 fi
-
-
-
-
 
 
 
@@ -159,7 +157,6 @@ else
     }
     askwebdavlocation
     
-   
     WEBDAVMOUNTPOINT="/home/student/Cloudstorage"
     FSTABCHECK=$(grep davfs /etc/fstab | wc -l)   #test if there is already a davfs entry (davfs is used by sed later)
 
@@ -175,9 +172,6 @@ else
     sudo chattr -i ${MOUNTPOINTCASPER}/upper/etc/fstab   #on an overlay FS like AUFS this must be done in the upper directory
     
     
-    
-    
-
     if test $FSTABCHECK = "1" 
     then
         echo "---------------------------------------------"
@@ -478,10 +472,23 @@ fi
 
 
 
-
-
-
 sudo -H -u ${USER} qdbus $progress Set "" value 17
+
+if [[( $SAVEPOWER = "0" )]]
+then
+    sleep 0 #do nothing
+else
+    #set powermanagment options
+    kwriteconfig5 --file powermanagementprofilesrc --group AC --group SuspendSession --key suspendType 8
+    kwriteconfig5 --file powermanagementprofilesrc --group AC --group SuspendSession --key suspendThenHibernate false
+    kwriteconfig5 --file powermanagementprofilesrc --group AC --group SuspendSession --key idleTime 7200000
+fi
+
+
+
+
+##  ACHTUNG !!  MUSS ALS LETZTES LAUFEN DA ES X RESTARTET !!!
+sudo -H -u ${USER} qdbus $progress Set "" value 18
 
 if [[( $LOCKDESKTOP = "0" )]]
 then
@@ -513,7 +520,7 @@ else
      echo "locking systemsettings..."
     sudo chmod -x /usr/bin/systemsettings5
     
-    sudo -H -u ${USER} qdbus $progress Set "" value 18
+    sudo -H -u ${USER} qdbus $progress Set "" value 19
 
     echo "all done..."
     echo "restarting desktop...."
