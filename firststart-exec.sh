@@ -11,20 +11,20 @@ FSTABETC="/etc/fstab"
 
 
 UPDATESOURCES=$1   #paketquellen werden nicht neu eingelesen
-CHANGEWEBDAVURL=$2  #owncloud.europagymnasium.at url wird verwendet
-CREATESSHKEYS=$3  # create unique ssh keys
-CHANGEHOSTNAME=$4  #hostname wird beibelassen "life"
-LOCKDESKTOP=$5      #abfrage ob der desktop gesperrt werden soll wird angezeigt
-INSTALLRESTRICTED=$6   #install licensed codecs, fonts, plugins
-BLOCKPACKAGES=$7        #for live usb block upgrades and installations of gub and kernel
-SHAREMOUNT=$8           #mount share partition (fat32) to /home/student/SHARE
-ROOTPW=${9}            #set password for user student
-SETUSER=${10}           #set user student autologin to true (life does not work with other usernames atm.)
-UPDATE=${11}           #update life applications
-UNTIS=${12}           #update life applications
-NETZLAUFWERK=${13}      #netzlaufwerk aufforderung nach autostart verschieben 
-AUTOCLEAN=${14}      #beim logout das autoclean script starten (delete * in /home - restore config !
-SAVEPOWER=${15}      #soll das system nach 120 minuten idletime herunterfahren
+
+CREATESSHKEYS=$2  # create unique ssh keys
+CHANGEHOSTNAME=$3  #hostname wird beibelassen "life"
+LOCKDESKTOP=$4      #abfrage ob der desktop gesperrt werden soll wird angezeigt
+INSTALLRESTRICTED=$5   #install licensed codecs, fonts, plugins
+BLOCKPACKAGES=$6        #for live usb block upgrades and installations of gub and kernel
+SHAREMOUNT=$7           #mount share partition (fat32) to /home/student/SHARE
+ROOTPW=${8}            #set password for user student
+
+
+UNTIS=${9}           #
+NETZLAUFWERK=${10}      #netzlaufwerk aufforderung nach autostart verschieben 
+AUTOCLEAN=${11}      #beim logout das autoclean script starten (delete * in /home - restore config !
+SAVEPOWER=${12}      #soll das system nach 120 minuten idletime herunterfahren
 
 
 
@@ -36,17 +36,13 @@ fi
 
 
 echo $UPDATESOURCES
-echo $CHANGEWEBDAVURL
 echo $CREATESSHKEYS
 echo $CHANGEHOSTNAME
 echo $LOCKDESKTOP
 echo $INSTALLRESTRICTED
-echo $INSTALLREADER
 echo $BLOCKPACKAGES
 echo $SHAREMOUNT
 echo $ROOTPW
-echo $SETUSER
-echo $UPDATE
 echo $UNTIS
 echo $NETZLAUFWERK
 echo $AUTOCLEAN

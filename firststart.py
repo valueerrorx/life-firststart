@@ -69,9 +69,7 @@ class MeinDialog(QtWidgets.QDialog):
         self.ui.restricted.setEnabled(True)
         #self.ui.restricted.setStyleSheet('color: #000;')
         #self.ui.restricted.setStyleSheet("""QToolTIP {color: #fff;}""")
-        self.ui.update.setEnabled(True)
-        #self.ui.update.setStyleSheet('color: #000;')
-        #self.ui.update.setStyleSheet("""QToolTIP {color: #fff;}""")
+        
         return
 
 
@@ -81,16 +79,15 @@ class MeinDialog(QtWidgets.QDialog):
         self.ui.sources.setChecked(False)
         self.ui.restricted.setEnabled(False)
         self.ui.restricted.setChecked(False)
-        self.ui.update.setEnabled(False)
-        self.ui.update.setChecked(False)
+       
         return
 
 
     def _startConfig(self):
             scriptdirectory=os.path.dirname(os.path.realpath(__file__))
-            command = "%s/firststart-exec.sh %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s" %(scriptdirectory,
+            command = "%s/firststart-exec.sh %s %s %s %s %s %s %s %s %s %s %s %s" %(scriptdirectory,
                                                                               self.ui.sources.checkState(),
-                                                                              self.ui.webdav.checkState(),
+                                                                              
                                                                               self.ui.ssh.checkState(),
                                                                               self.ui.hostname.checkState(),
                                                                               self.ui.lock.checkState(),
@@ -98,8 +95,8 @@ class MeinDialog(QtWidgets.QDialog):
                                                                               self.ui.block.checkState(),
                                                                               self.ui.share.checkState(),
                                                                               self.ui.rootpw.checkState(), 
-                                                                              self.ui.setuser.checkState(), 
-                                                                              self.ui.update.checkState(),
+                                                                              
+                                                                             
                                                                               self.ui.untis.checkState(),
                                                                               self.ui.remoteshare.checkState(),
                                                                               self.ui.autoclean.checkState(),

@@ -8,7 +8,7 @@
     <x>0</x>
     <y>0</y>
     <width>539</width>
-    <height>680</height>
+    <height>615</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -35,7 +35,7 @@
      <x>10</x>
      <y>10</y>
      <width>520</width>
-     <height>661</height>
+     <height>601</height>
     </rect>
    </property>
    <property name="minimumSize">
@@ -342,19 +342,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="webdav">
-          <property name="toolTip">
-           <string>Das temporäre Einbinden einer Cloud Ressource geschieht über das WebDav Protokoll.&lt;br&gt;Die URL muss hierfür angegeben werden.</string>
-          </property>
-          <property name="text">
-           <string>Webdav URL anpassen (ownCloud/nextCloud)</string>
-          </property>
-          <property name="checked">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QCheckBox" name="savepower">
           <property name="text">
            <string>System nach 120 Minuten (Idle Time) automatisch herunterfahren</string>
@@ -396,35 +383,6 @@
           </property>
           <property name="text">
            <string>Passwort für den Nutzer &quot;Student&quot; setzten (default: leer)</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="setuser">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="toolTip">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wurde das System auf einem PC installiert, &lt;br/&gt;so muss für den vollen Funktionsumfang &lt;br/&gt;der Nutzer Student als Standnutzer gewählt werden. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="text">
-           <string>Nutzer &quot;Student&quot; automatisch einloggen (Standard auf live Systemen)</string>
-          </property>
-          <property name="checked">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="update">
-          <property name="toolTip">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bringt die LiFE Applications auf neuesten Stand&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="text">
-           <string>LiFE Applications updaten</string>
-          </property>
-          <property name="checked">
-           <bool>false</bool>
           </property>
          </widget>
         </item>
