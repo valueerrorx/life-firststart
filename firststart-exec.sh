@@ -25,7 +25,7 @@ UNTIS=${9}           #
 NETZLAUFWERK=${10}      #netzlaufwerk aufforderung nach autostart verschieben 
 AUTOCLEAN=${11}      #beim logout das autoclean script starten (delete * in /home - restore config !
 SAVEPOWER=${12}      #soll das system nach 120 minuten idletime herunterfahren
-
+CHROME=${13}        # sollen alle cookies beim beenden von chrome gelöscht werden (sinnvoll auf öffentlichen geräten)    
 
 
 if [ "$(id -u)" != "0" ]; then
@@ -47,6 +47,7 @@ echo $UNTIS
 echo $NETZLAUFWERK
 echo $AUTOCLEAN
 echo $SAVEPOWER
+echo $CHROME
 #exit 0
  
  
@@ -127,88 +128,15 @@ fi
 
 
 sudo -H -u ${USER} qdbus $progress Set "" value 5
-# 
-# if [[( $CHANGEWEBDAVURL = "0" )]]
-# then
-#     sleep 0 #do nothing
-#     #WEBDAVLOCATION="https://owncloud.europagymnasium.at/remote.php/webdav"
-# else
-# 
-#     sudo -H -u ${USER} qdbus $progress setLabelText "Konfiguriere Webdav Location.... "
-# 
-#     # check if the location is actually close to something that would work
-#     SUBSTRING="http"
-# 
-#     askwebdavlocation(){
-#         if ! WEBDAVLOCATION=$(kdialog --title "Configure Webdav Location"  --inputbox "Bitte bestätigen Sie die URL ihres WEBDAV Ordners!" "https://owncloud.europagymnasium.at/remote.php/webdav"); 
-#         then
-#             askwebdavlocation
-#         else
-#             if test "${WEBDAVLOCATION#$SUBSTRING}" != "$WEBDAVLOCATION"
-#             then
-#                 echo "address seems legit";          # $SUBSTRING is in $WEBDAVLOCATION at the beginning of the line
-#             sleep 0
-#             else
-#                 #echo "that is not a webdav location";  # $SUBSTRING is not in $WEBDAVLOCATION
-#                 kdialog --error "$WEBDAVLOCATION \n\nDies ist keine gültige Webdav Adresse!" --title 'Configure Webdav Location!' 
-#                 askwebdavlocation
-#             fi
-#         fi
-#     }
-#     askwebdavlocation
-#     
-#    
-#     WEBDAVMOUNTPOINT="/home/student/Cloudstorage"
-#     FSTABCHECK=$(grep davfs /etc/fstab | wc -l)   #test if there is already a davfs entry (davfs is used by sed later)
-# 
-#     # replace current fstab entry with new one
-# 
-#     MOUNTPOINTCASPER="/media/casper"
-#     COW=$(cat /proc/mounts | grep /cdrom | /bin/sed -e 's/^\/dev\/*//' |cut -c 1-3)   #find cow device
-#     COWDEV="/dev/${COW}3"
-#     
-#     sudo mkdir ${MOUNTPOINTCASPER}
-#     sudo mount $COWDEV $MOUNTPOINTCASPER
-#     
-#     sudo chattr -i ${MOUNTPOINTCASPER}/upper/etc/fstab   #on an overlay FS like AUFS this must be done in the upper directory
-#     
-#     
-#     
-#     
-# 
-#     if test $FSTABCHECK = "1" 
-#     then
-#         echo "---------------------------------------------"
-#         echo "fstab ok !"
-#     else
-#         echo "davfs" >> /etc/fstab
-# 
-#     fi
-#     sudo sed -i "/davfs/c\\$WEBDAVLOCATION  $WEBDAVMOUNTPOINT	davfs	user,noauto	0	0" $FSTABETC
-#     
-#     sudo chattr +i ${MOUNTPOINTCASPER}/upper/etc/fstab   #make immutable because on live devices this is overwritten on boot otherwise
-#  
-#  
-#  sudo umount $MOUNTPOINTCASPER
-# 
-#     echo "---------------------------------------------"
-#     echo "Webdav location written to fstab!"
-#     echo "---------------------------------------------"
-#     cat /etc/fstab
-#     echo "---------------------------------------------"
-#     
-#     LOCATION=${WEBDAVLOCATION%/*/*}  #cut the webdav part
-#     #change url for the desktop link too
-#     sed -i "s#\"http.*\"#\"${LOCATION}\"#g" ${HOME}/.local/share/applications/NextCloud.desktop 
-#     sed -i "s#\"http.*\"#\"${LOCATION}\"#g" ${HOME}/.local/share/plasma_icons/NextCloud.desktop
-#     
-#     #network environment location  (cut https://)
-#     LOCATIONNET=${WEBDAVLOCATION#*//}
-#     LOCATIONNET="webdavs://${LOCATIONNET}"
-#     sed -i "s#webdavs:/.*#${LOCATIONNET}#g" "${HOME}/.local/share/remoteview/owncloud-Europagymnasium webdavs.desktop"
-#     
-# fi
-# 
+
+if [[( $CHROME = "0" )]]
+then
+     sleep 0 #do nothing   
+else
+ sudo -H -u ${USER} qdbus $progress setLabelText "Aktiviere automatische löschung von cookies.... "
+    exec ~/.life/applications/life-helperscripts/chrome-cookies-autodelete.sh &
+fi
+
 
 
 
