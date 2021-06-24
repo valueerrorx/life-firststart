@@ -133,7 +133,8 @@ if [[( $CHROME = "0" )]]
 then
      sleep 0 #do nothing   
 else
-    exec ~/.life/applications/life-helperscripts/chrome-cookies-autodelete.sh 
+ sudo -H -u ${USER} qdbus $progress setLabelText "Aktiviere automatische löschung von cookies.... "
+    exec ~/.life/applications/life-helperscripts/chrome-cookies-autodelete.sh &
 fi
 
 
