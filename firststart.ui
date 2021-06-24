@@ -361,7 +361,7 @@
         <item>
          <widget class="QCheckBox" name="chrome">
           <property name="text">
-           <string>Chrome Cookies und Webseiten Daten beim Beenden löschen</string>
+           <string>Chrome/Firefox Cookies und Webseiten Daten beim Beenden löschen</string>
           </property>
           <property name="checked">
            <bool>false</bool>
