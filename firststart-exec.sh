@@ -466,8 +466,66 @@ if [[( $AUTOCLEAN = "0" )]]
 then
     sleep 0 #do nothing
 else
-    #copy autoclean script to plasmaworkspace/shutdown
-    cp -p  ${HOME}/.life/applications/helperscripts/auto-cleanup-home.sh  ${HOME}/.config/plasma-workspace/shutdown/
+    # check if this is a live system
+    if grep -q casper /proc/cmdline; 
+    then 
+        echo "Live-Session erkannt"; 
+        kdialog  --msgbox 'Live-Session erkannt - Autoclean deaktiviert' --title 'LIFE' > /dev/null
+        sleep 2
+    else 
+        # create overlay directories
+        sudo mkdir -p /mnt/upper /mnt/work
+        sudo chown -R student:student /mnt/upper /mnt/work
+
+
+        # check if the service already exists
+        if [ -f /etc/systemd/system/overlay-cleaner.service ]; then
+            echo "Service already exists"
+        else
+            # write a systemd service that runs on boot and cleans the overlay directories
+            echo "
+            [Unit]
+            Description=Delete overlay upper/work before mount
+            After=local-fs.target
+            Before=home-student.mount
+
+            [Service]
+            Type=oneshot
+            ExecStart=/bin/rm -rf /mnt/upper /mnt/work || true
+            ExecStartPost=/bin/mkdir -p /mnt/upper /mnt/work || true
+            ExecStartPost=/bin/chown -R student:student /mnt/upper /mnt/work || true
+            RemainAfterExit=true    
+
+            [Install]
+            WantedBy=home-student.mount
+            " > /etc/systemd/system/overlay-cleaner.service
+        fi
+
+        #enable the service
+        sudo systemctl enable overlay-cleaner.service
+
+        #start the service
+        sudo systemctl start overlay-cleaner.service
+        
+        # create fstab entry for overlay directories mounted on boot in /home/student/ but first check if it already exists
+        if ! grep -q "overlay-cleaner" /etc/fstab; then
+            echo "overlay /home/student overlay lowerdir=/home/student,upperdir=/mnt/upper,workdir=/mnt/work,x-systemd.requires=overlay-cleaner.service,x-systemd.after=overlay-cleaner.service 0 0" >> /etc/fstab
+        fi  
+
+
+        kdialog  --msgbox 'Autoclean aktiviert - Nach einem Neustart wird das Overlay-Dateisystem gemounted (fstab) und automatisch bei jedem Systemstart geleert' --title 'LIFE' > /dev/null
+        sleep 2
+    fi
+
+
+
+    
+
+
+
+
+
+
 fi
 
 
