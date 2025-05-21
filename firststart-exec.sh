@@ -1,6 +1,5 @@
 #!/bin/bash
-
-# last updated: 21.05.2025
+# last updated: 08.02.2017
 # Europagymnasium Only!!
 #
 # first locks the desktop and then configures webdavlocation in fstab for our schools owncloud service
@@ -42,7 +41,6 @@ echo $CREATESSHKEYS
 echo $CHANGEHOSTNAME
 echo $LOCKDESKTOP
 echo $INSTALLRESTRICTED
-echo $INSTALLREADER
 echo $BLOCKPACKAGES
 echo $SHAREMOUNT
 echo $ROOTPW
@@ -60,23 +58,23 @@ echo $SAVEPOWER
  
  
  
-progress=$(sudo -H -u ${USER} kdialog --progressbar "Paktetlisten werden aktualisiert....                                                              ");
+progress=$( kdialog --progressbar "Paktetlisten werden aktualisiert....                                                              ");
 
 
 #remove cdrom entry from sources.list
-sudo sed -i "/cdrom/c\\#" /etc/apt/sources.list
+#sudo sed -i "/cdrom/c\\#" /etc/apt/sources.list
 
 
 
-sudo -H -u ${USER} qdbus $progress Set "" maximum 19
+qdbus $progress Set "" maximum 19
 
 if [[( $UPDATESOURCES = "0" )]]
 then
     sleep 0 #do nothing
 else
-    sudo -H -u ${USER} qdbus $progress Set "" value 1
+    qdbus $progress Set "" value 1
     sudo apt update
-    sudo -H -u ${USER} qdbus $progress Set "" value 2
+    qdbus $progress Set "" value 2
     sudo apt clean
     sudo apt-get clean
 fi
@@ -84,13 +82,13 @@ fi
 
 
 
-sudo -H -u ${USER} qdbus $progress Set "" value 3
+qdbus $progress Set "" value 3
 
 if [[( $UPDATESOURCES = "0" )]]
 then
     sleep 0 #do nothing
 else
-    sudo -H -u ${USER} qdbus $progress setLabelText "APT Index wird aktualisiert.... dies kann einige Minuten dauern"
+    qdbus $progress setLabelText "APT Index wird aktualisiert.... dies kann einige Minuten dauern"
     sudo update-apt-xapian-index -f
 fi
 
@@ -102,13 +100,13 @@ fi
 
 
 
-sudo -H -u ${USER} qdbus $progress Set "" value 4
+qdbus $progress Set "" value 4
 
 if [[( $CREATESSHKEYS = "0" )]]
 then
     sleep 0 #do nothing
 else
-    sudo -H -u ${USER} qdbus $progress setLabelText "SSH Schlüssel werden generiert...."
+    qdbus $progress setLabelText "SSH Schlüssel werden generiert...."
     cd /etc/ssh
     sudo rm -f *_key*
     sudo ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key -N ''
@@ -127,7 +125,7 @@ fi
 
 
 
-sudo -H -u ${USER} qdbus $progress Set "" value 5
+qdbus $progress Set "" value 5
 
 if [[( $CHANGEWEBDAVURL = "0" )]]
 then
@@ -135,7 +133,7 @@ then
     #WEBDAVLOCATION="https://owncloud.europagymnasium.at/remote.php/webdav"
 else
 
-    sudo -H -u ${USER} qdbus $progress setLabelText "Konfiguriere Webdav Location.... "
+    qdbus $progress setLabelText "Konfiguriere Webdav Location.... "
 
     # check if the location is actually close to something that would work
     SUBSTRING="http"
@@ -215,13 +213,13 @@ fi
 
 
 
-sudo -H -u ${USER} qdbus $progress Set "" value 6
+qdbus $progress Set "" value 6
 
 if [[( $CHANGEHOSTNAME = "0" )]]
 then
     sleep 0 #do nothing
 else
-    sudo -H -u ${USER} qdbus $progress setLabelText "Ändere den Hostnamen.... "
+    qdbus $progress setLabelText "Ändere den Hostnamen.... "
 
     if ! HOST=$(kdialog --title "HOSTNAME"  --inputbox "Bitte geben sie einen HOSTNAMEN an" "life"); 
     then
@@ -252,13 +250,13 @@ fi
 
 
 
-sudo -H -u ${USER} qdbus $progress Set "" value 7
+qdbus $progress Set "" value 7
 
 if [[( $INSTALLRESTRICTED = "0" )]]
 then
     sleep 0 #do nothing
 else
-    sudo -H -u ${USER} qdbus $progress setLabelText "Installiere Schriftarten und Plugins.... "
+    qdbus $progress setLabelText "Installiere Schriftarten und Plugins.... "
     bar(){
         sudo apt-get -y install ttf-bitstream-vera  ttf-dejavu ttf-xfree86-nonfree kubuntu-restricted-extras kubuntu-restricted-addons
     }
@@ -269,13 +267,13 @@ fi
 
 
 
-sudo -H -u ${USER} qdbus $progress Set "" value 8
+qdbus $progress Set "" value 8
 
 if [[( $BLOCKPACKAGES = "0" )]]
 then
     sleep 0 #do nothing
 else
-    sudo -H -u ${USER} qdbus $progress setLabelText "Blockiere Bootloader- und Kernelupgrades.... "
+    qdbus $progress setLabelText "Blockiere Bootloader- und Kernelupgrades.... "
     echo -e "Package: grub*\nPin: release *\nPin-Priority: -1\n" > /etc/apt/preferences
     echo -e "Package: grub*:i386\nPin: release *\nPin-Priority: -1\n" >> /etc/apt/preferences
     echo -e "Package: linux-image*\nPin: release *\nPin-Priority: -1\n" >> /etc/apt/preferences
@@ -284,13 +282,13 @@ else
 fi
 
 
-sudo -H -u ${USER} qdbus $progress Set "" value 9
+qdbus $progress Set "" value 9
 
 if [[( $SHAREMOUNT = "0" )]]
 then
     sleep 0 #do nothing
 else
-    sudo -H -u ${USER} qdbus $progress setLabelText "Making SHARE mount permanent...."
+    qdbus $progress setLabelText "Making SHARE mount permanent...."
     
     FSTABCHECK=$(grep SHARE /etc/fstab | wc -l)   #test if there is already a SHARE entry (SHARE is used by sed later)
 
@@ -341,13 +339,13 @@ fi
 
 
 
-sudo -H -u ${USER} qdbus $progress Set "" value 11
+qdbus $progress Set "" value 11
 
 if [[( $ROOTPW = "0" )]]
 then
     sleep 0 #do nothing
 else
-    sudo -H -u ${USER} qdbus $progress setLabelText "Neues Passwort setzen.... "
+    qdbus $progress setLabelText "Neues Passwort setzen.... "
     
     
     PW="empty"
@@ -385,37 +383,37 @@ fi
 
 
 
-sudo -H -u ${USER} qdbus $progress Set "" value 12
+qdbus $progress Set "" value 12
 
 if [[( $SETUSER = "0" )]]
 then
     sleep 0 #do nothing
 else
-    sudo -H -u ${USER} qdbus $progress setLabelText "Aktiviere Autologin für Benutzer Student.... "
+    qdbus $progress setLabelText "Aktiviere Autologin für Benutzer Student.... "
     sudo cp /home/student/.life/stuff/sddm.conf /etc/
     sudo chown root: /etc/sddm.conf
 fi
 
 
-sudo -H -u ${USER} qdbus $progress Set "" value 13
+qdbus $progress Set "" value 13
 
 if [[( $UPDATE = "0" )]]
 then
     sleep 0 #do nothing
 else
-    sudo -H -u ${USER} qdbus $progress setLabelText "LiFE applications werden aktualisiert.... "
+    qdbus $progress setLabelText "LiFE applications werden aktualisiert.... "
     exec sudo -H -u student python ~/.life/applications/life-update/main.py &
 fi
 
 
 
-sudo -H -u ${USER} qdbus $progress Set "" value 14
+qdbus $progress Set "" value 14
 
 if [[( $UNTIS = "0" )]]
 then
     sleep 0 #do nothing
 else
-    sudo -H -u ${USER} qdbus $progress setLabelText "WebUntis URL anpassen.... "
+    qdbus $progress setLabelText "WebUntis URL anpassen.... "
     
     # check if the location is actually close to something that would work
     SUBSTRING="http"
@@ -449,7 +447,7 @@ fi
 
 
 
-sudo -H -u ${USER} qdbus $progress Set "" value 15
+qdbus $progress Set "" value 15
 
 if [[( $NETZLAUFWERK = "0" )]]
 then
@@ -461,7 +459,7 @@ fi
 
 
 
-sudo -H -u ${USER} qdbus $progress Set "" value 16
+qdbus $progress Set "" value 16
 
 if [[( $AUTOCLEAN = "0" )]]
 then
@@ -539,7 +537,7 @@ fi
 
 
 
-sudo -H -u ${USER} qdbus $progress Set "" value 17
+qdbus $progress Set "" value 17
 
 if [[( $SAVEPOWER = "0" )]]
 then
@@ -555,13 +553,13 @@ fi
 
 
 ##  ACHTUNG !!  MUSS ALS LETZTES LAUFEN DA ES X RESTARTET !!!
-sudo -H -u ${USER} qdbus $progress Set "" value 18
+qdbus $progress Set "" value 18
 
 if [[( $LOCKDESKTOP = "0" )]]
 then
     sleep 0 #do nothing
 else
-    sudo -H -u ${USER} qdbus $progress setLabelText "Sperre den Desktop.... "
+    qdbus $progress setLabelText "Sperre den Desktop.... "
     
     if [ -f "/etc/kde5rc" ];then
         kdialog  --msgbox 'Desktop is already locked - Stopping program' --title 'LIFE' > /dev/null
@@ -587,7 +585,7 @@ else
      echo "locking systemsettings..."
     sudo chmod -x /usr/bin/systemsettings5
     
-    sudo -H -u ${USER} qdbus $progress Set "" value 19
+    qdbus $progress Set "" value 19
 
     echo "all done..."
     echo "restarting desktop...."
@@ -601,9 +599,9 @@ fi
 
 
 
-sudo -H -u ${USER} qdbus $progress setLabelText "LIFE Client eingerichtet"  
+qdbus $progress setLabelText "LIFE Client eingerichtet"
 sleep 2
-sudo -H -u ${USER} qdbus $progress close
+qdbus $progress close
 
 
 
