@@ -482,35 +482,43 @@ else
         if [ -f /etc/systemd/system/overlay-cleaner.service ]; then
             echo "Service already exists"
         else
-            # write a systemd service that runs on boot and cleans the overlay directories
-            echo "
-            [Unit]
-            Description=Delete overlay upper/work before mount
-            After=local-fs.target
-            Before=home-student.mount
 
-            [Service]
-            Type=oneshot
-            ExecStart=/bin/rm -rf /mnt/upper /mnt/work || true
-            ExecStartPost=/bin/mkdir -p /mnt/upper /mnt/work || true
-            ExecStartPost=/bin/chown -R student:student /mnt/upper /mnt/work || true
-            RemainAfterExit=true    
 
-            [Install]
-            WantedBy=home-student.mount
-            " > /etc/systemd/system/overlay-cleaner.service
+# write a systemd service that runs on boot and cleans the overlay directories as root
+
+sudo tee /etc/systemd/system/overlay-cleaner.service > /dev/null <<'EOF'
+[Unit]
+Description=Delete overlay upper/work before mount
+After=local-fs.target
+Before=home-student.mount
+
+[Service]
+Type=oneshot
+ExecStart=/bin/rm -rf /mnt/upper /mnt/work || true
+ExecStartPost=/bin/mkdir -p /mnt/upper /mnt/work || true
+ExecStartPost=/bin/chown -R student:student /mnt/upper /mnt/work || true
+RemainAfterExit=true    
+
+[Install]
+WantedBy=home-student.mount
+EOF
+
+
+
         fi
 
         #enable the service
+        sudo systemctl daemon-reload
         sudo systemctl enable overlay-cleaner.service
 
         #start the service
         sudo systemctl start overlay-cleaner.service
         
         # create fstab entry for overlay directories mounted on boot in /home/student/ but first check if it already exists
+   
         if ! grep -q "overlay-cleaner" /etc/fstab; then
-            echo "overlay /home/student overlay lowerdir=/home/student,upperdir=/mnt/upper,workdir=/mnt/work,x-systemd.requires=overlay-cleaner.service,x-systemd.after=overlay-cleaner.service 0 0" >> /etc/fstab
-        fi  
+            echo "overlay /home/student overlay lowerdir=/home/student,upperdir=/mnt/upper,workdir=/mnt/work,x-systemd.requires=overlay-cleaner.service,x-systemd.after=overlay-cleaner.service 0 0" | sudo tee -a /etc/fstab > /dev/null
+        fi
 
 
         kdialog  --msgbox 'Autoclean aktiviert - Nach einem Neustart wird das Overlay-Dateisystem gemounted (fstab) und automatisch bei jedem Systemstart geleert' --title 'LIFE' > /dev/null
