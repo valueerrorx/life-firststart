@@ -1,5 +1,6 @@
 #!/bin/bash
-# last updated: 08.02.2017
+
+# last updated: 21.05.2025
 # Europagymnasium Only!!
 #
 # first locks the desktop and then configures webdavlocation in fstab for our schools owncloud service
